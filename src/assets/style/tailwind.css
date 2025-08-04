@@ -1,0 +1,35 @@
+/* tailwind */
+@import 'tailwindcss';
+
+@theme {
+  --color-primary-500: hsla(160, 100%, 37%, 1);
+  --color-primary-900: hsla(160, 100%, 37%, 0.6);
+}
+
+@layer components {
+  .btn {
+    @apply px-3 py-4 text-center;
+  }
+
+  .btn-md {
+    @apply px-2 py-1 text-center;
+  }
+
+  .btn-sm {
+    @apply p-1 text-center;
+  }
+
+  .btn-primary {
+    @apply text-stone-950 hover:text-stone-200 bg-primary-500 hover:bg-primary-900;
+  }
+
+  .btn-danger {
+    @apply bg-red-500 text-red-50 hover:bg-red-700;
+  }
+
+  .btn-info {
+    @apply bg-sky-600 text-sky-50 hover:bg-blue-600;
+  }
+}
+
+@plugin "@tailwindcss/forms";
