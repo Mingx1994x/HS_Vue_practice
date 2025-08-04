@@ -16,5 +16,5 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
-  base: 'https://mingx1994x.github.io/HS_Vue_practice/'
+  base: /HS_Vue_practice/
 })
