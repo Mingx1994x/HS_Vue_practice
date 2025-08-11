@@ -1,16 +1,15 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+import NavLinks from './components/NavLinks.vue'
+NavLinks
 </script>
 
 <template>
   <header>
     <div class="wrapper">
       <HelloWorld msg="Vue3 前端新手營｜2025" />
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/week1">Week1</RouterLink>
-      </nav>
+      <NavLinks />
     </div>
   </header>
 
