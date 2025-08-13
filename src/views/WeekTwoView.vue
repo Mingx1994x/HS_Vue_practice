@@ -2,7 +2,9 @@
 import axios from 'axios'
 import { onMounted, ref } from 'vue'
 import { getToken, keepToken } from '@/utils/cookieTool'
+import TodoList from '@/components/TodoList.vue'
 
+const { VITE_APP_BASEURL: baseUrl } = import.meta.env
 const isLogin = ref(false)
 const modeState = ref('login')
 
@@ -17,7 +19,6 @@ const userRegister = ref({
   nickname: '',
 })
 
-const { VITE_APP_BASEURL: baseUrl } = import.meta.env
 const signUp = async () => {
   if (!userRegister.value.email || !userRegister.value.password || !userRegister.value.nickname) {
     alert('請輸入完整註冊資訊')
@@ -59,10 +60,11 @@ const checkout = async () => {
         authorization: getToken(),
       },
     })
+    axios.defaults.headers['authorization'] = getToken()
     userNickname.value = res.data.nickname
     isLogin.value = true
   } catch (error) {
-    alert(error.response?.data?.message || '請重新登入或洽詢客服')
+    alert(error.response?.data?.message + '，請重新登入或洽詢客服')
   }
 }
 
@@ -93,7 +95,10 @@ const switchMode = (mode) => {
 }
 
 onMounted(() => {
-  checkout()
+  const token = getToken()
+  if (token) {
+    checkout()
+  }
 })
 </script>
 
@@ -110,6 +115,7 @@ onMounted(() => {
             class="block w-full rounded-md bg-gray-100 border-transparent ring-0 focus:bg-white focus:ring-3 focus:ring-primary-500 text-slate-900"
             placeholder="example@gmail.com"
             v-model.trim="userLogin.email"
+            :disabled="isLogin"
           />
         </label>
         <label class="block mb-4">
@@ -119,6 +125,7 @@ onMounted(() => {
             class="block w-full rounded-md bg-gray-100 border-transparent ring-0 focus:bg-white focus:ring-3 focus:ring-primary-500 text-slate-900"
             placeholder="password"
             v-model="userLogin.password"
+            :disabled="isLogin"
           />
         </label>
         <div class="self-center flex flex-col gap-y-2">
@@ -165,20 +172,22 @@ onMounted(() => {
       </template>
     </div>
     <!-- TodoList -->
-    <div class="flex items-start">
-      <template v-if="isLogin">
-        <h3 class="me-auto">
+
+    <template v-if="isLogin">
+      <div class="flex">
+        <h3 class="text-[24px] me-auto">
           <span class="font-bold text-primary-500">{{ userNickname }}</span
           >'s TodoList
         </h3>
         <button type="button" class="btn-md rounded btn-danger" @click="signOut">登出</button>
-      </template>
-      <template v-else>
-        <div class="flex flex-col">
-          <h3 class="block">TodoList</h3>
-          <p>尚未登入</p>
-        </div>
-      </template>
-    </div>
+      </div>
+      <TodoList />
+    </template>
+    <template v-else>
+      <div class="flex flex-col">
+        <h3 class="block">TodoList</h3>
+        <p>尚未登入</p>
+      </div>
+    </template>
   </div>
 </template>
