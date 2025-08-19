@@ -2,14 +2,36 @@
 import { RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import NavLinks from './components/NavLinks.vue'
-NavLinks
+import { onMounted, ref } from 'vue'
+
+const links = ref([])
+onMounted(() => {
+  links.value = [
+    {
+      name: 'Home',
+      route: '/',
+    },
+    {
+      name: 'Week1',
+      route: '/week1',
+    },
+    {
+      name: 'Week2',
+      route: '/week2',
+    },
+    {
+      name: 'Week3',
+      route: '/week3',
+    },
+  ]
+})
 </script>
 
 <template>
   <header>
     <div class="wrapper">
       <HelloWorld msg="Vue3 前端新手營｜2025" />
-      <NavLinks />
+      <NavLinks :routes="links" />
     </div>
   </header>
 

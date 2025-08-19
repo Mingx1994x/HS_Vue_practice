@@ -22,6 +22,21 @@ const router = createRouter({
       component: () => import('../views/WeekTwoView.vue'),
     },
     {
+      path: '/week3',
+      name: 'week3',
+      component: () => import('../views/WeekThreeView.vue'),
+      children: [
+        {
+          path: '',
+          component: () => import('../components/LessonExample.vue')
+        },
+        {
+          path: 'week3-task',
+          component: () => import('../components/WeekThreeTask.vue')
+        }
+      ]
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: 'NotFound',
       component: NotFound
