@@ -7,5 +7,5 @@ export function keepToken(token, expired) {
 }
 
 export function getToken() {
-  return document.cookie.replace(/(?:(?:^|.*;\s*)HexTodoList\s*\=\s*([^;]*).*$)|^.*$/, "$1",);
+  return document.cookie.replace(/(?:(?:^|.*;\s*)HexTodoList\s*=\s*([^;]*).*$)|^.*$/, "$1",);
 }
