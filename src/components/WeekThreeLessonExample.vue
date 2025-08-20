@@ -75,7 +75,7 @@ onMounted(() => {
   <div class="demo-container">
     <h3 class="text-2xl">ProductCard 雙情境範例</h3>
     <!-- 顯示商品內容 -->
-    <div v-if="hasData">
+    <div class="flex flex-col xl:flex-row gap-2" v-if="hasData">
       <!-- 情境 A：商品列表（正常版） -->
       <section class="section">
         <h4 class="text-xl text-slate-900">情境 A：商品列表（正常版）</h4>

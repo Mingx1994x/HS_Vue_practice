@@ -15,9 +15,11 @@ const links = ref([
 ])
 </script>
 <template>
-  <div>
-    <h2 class="text-3xl font-bold underline py-4">Week3</h2>
+  <div class="w-3/4 mx-auto">
+    <h2 class="text-3xl font-bold underline text-center mb-4">Week3 練習</h2>
     <NavLinks :routes="links" />
-    <RouterView />
+    <div class="mt-8">
+      <RouterView />
+    </div>
   </div>
 </template>

@@ -121,68 +121,62 @@ const cancelEditProduct = (id) => {
 }
 </script>
 <template>
-  <div class="wrap">
-    <h2 class="text-3xl font-bold underline py-4">Week1 練習</h2>
-    <p>P.S. 點擊兩下品項名稱編輯</p>
-    <table class="py-3">
-      <thead>
-        <tr>
-          <th scope="col">品項</th>
-          <th scope="col">描述</th>
-          <th scope="col">價格</th>
-          <th scope="col">庫存</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in products" :key="item.id">
-          <td v-on:dblclick="switchEditMode(item.id, item.name)" class="p-2">
-            <div v-if="editMode[item.id]" class="flex items-center">
-              <input
-                name="productName"
-                type="text"
-                v-model="item.name"
-                class="form-input rounded text-stone-500"
-              />
-              <div class="ms-3">
-                <button
-                  v-on:click="cancelEditProduct(item.id)"
-                  class="btn-md btn-danger rounded-l-md"
-                >
-                  取消
+  <div class="w-3/4 xl:w-1/2 mx-auto">
+    <h2 class="text-3xl font-bold underline text-center mb-4">Week1 練習</h2>
+    <div class="flex flex-col items-center">
+      <p class="mb-4">P.S. 點擊兩下品項名稱編輯</p>
+      <table class="w-full">
+        <thead>
+          <tr>
+            <th scope="col">品項</th>
+            <th scope="col">描述</th>
+            <th scope="col">價格</th>
+            <th scope="col">庫存</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in products" :key="item.id">
+            <td v-on:dblclick="switchEditMode(item.id, item.name)" class="p-2">
+              <div v-if="editMode[item.id]" class="flex items-center justify-center">
+                <input
+                  name="productName"
+                  type="text"
+                  v-model="item.name"
+                  class="form-input rounded text-stone-500"
+                />
+                <div class="ms-3">
+                  <button
+                    v-on:click="cancelEditProduct(item.id)"
+                    class="btn-md btn-danger rounded-l-md"
+                  >
+                    取消
+                  </button>
+                  <button v-on:click="editProduct(item.id)" class="btn-md btn-info rounded-e-md">
+                    確定
+                  </button>
+                </div>
+              </div>
+              <p v-else class="text-center">{{ item.name }}</p>
+              <!-- {{ item.name }} <input type="text" v-model="item.name" /> -->
+            </td>
+            <td class="p-3">
+              <p class="text-center">{{ item.description }}</p>
+            </td>
+            <td class="p-3 text-center">{{ item.price }}</td>
+            <td class="p-3">
+              <div class="flex items-center justify-center">
+                <button v-on:click="reduceQty(item.id)" class="btn-sm btn-primary rounded-l-full">
+                  -
                 </button>
-                <button v-on:click="editProduct(item.id)" class="btn-md btn-info rounded-e-md">
-                  確定
+                {{ item.qty }}
+                <button v-on:click="addQty(item.id)" class="btn-sm btn-primary rounded-e-full">
+                  +
                 </button>
               </div>
-            </div>
-            <div v-else>{{ item.name }}</div>
-            <!-- {{ item.name }} <input type="text" v-model="item.name" /> -->
-          </td>
-          <td class="p-3">
-            <small>{{ item.description }}</small>
-          </td>
-          <td class="p-3">{{ item.price }}</td>
-          <td class="p-3">
-            <button v-on:click="reduceQty(item.id)" class="btn-sm btn-primary rounded-l-full">
-              -
-            </button>
-            {{ item.qty }}
-            <button v-on:click="addQty(item.id)" class="btn-sm btn-primary rounded-e-full">
-              +
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
-
-<style>
-.wrap {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
-</style>

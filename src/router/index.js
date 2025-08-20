@@ -28,7 +28,7 @@ const router = createRouter({
       children: [
         {
           path: '',
-          component: () => import('../components/LessonExample.vue')
+          component: () => import('../components/WeekThreeLessonExample.vue')
         },
         {
           path: 'week3-task',

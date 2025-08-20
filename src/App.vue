@@ -32,7 +32,7 @@ onMounted(() => {
     <HelloWorld msg="Vue3 前端新手營｜2025" />
   </header>
   <NavLinks :routes="links" mainNav />
-  <div class="container mx-auto">
+  <div class="flex flex-wrap -mx-3 mt-3">
     <RouterView />
   </div>
 </template>
