@@ -1,0 +1,15 @@
+.colored-toast .swal2-title {
+  color: white;
+}
+
+.colored-toast.swal2-icon-success.add-to-cart {
+  background-color: var(--color-primary-500);
+}
+
+.colored-toast.swal2-icon-success.delete-cart {
+  background-color: var(--color-orange-400);
+}
+
+.colored-toast.swal2-icon-error {
+  background-color: var(--color-red-400);
+}

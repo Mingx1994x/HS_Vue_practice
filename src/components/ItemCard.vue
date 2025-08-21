@@ -1,4 +1,6 @@
 <script setup>
+import { useToast } from '@/composable/useToast'
+
 const props = defineProps({
   product: {
     type: Object,
@@ -9,8 +11,10 @@ const { product } = props
 const { title, description, price, imgUrl } = product
 
 const emits = defineEmits(['add-to-cart'])
+const notification = useToast()
 const addToCart = () => {
   emits('add-to-cart', product)
+  notification.successState(product.title)
 }
 </script>
 <template>

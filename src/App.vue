@@ -1,30 +1,32 @@
 <script setup>
+import { ref } from 'vue'
 import { RouterView } from 'vue-router'
+
 import HelloWorld from './components/HelloWorld.vue'
 import NavLinks from './components/NavLinks.vue'
-import { onMounted, ref } from 'vue'
+import { useToastProvide } from './composable/useToastProvide'
 
-const links = ref([])
-onMounted(() => {
-  links.value = [
-    {
-      name: 'Home',
-      route: '/',
-    },
-    {
-      name: 'Week1',
-      route: '/week1',
-    },
-    {
-      name: 'Week2',
-      route: '/week2',
-    },
-    {
-      name: 'Week3',
-      route: '/week3',
-    },
-  ]
-})
+// 路由
+const links = ref([
+  {
+    name: 'Home',
+    route: '/',
+  },
+  {
+    name: 'Week1',
+    route: '/week1',
+  },
+  {
+    name: 'Week2',
+    route: '/week2',
+  },
+  {
+    name: 'Week3',
+    route: '/week3',
+  },
+])
+
+useToastProvide()
 </script>
 
 <template>

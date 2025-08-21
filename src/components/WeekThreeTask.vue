@@ -3,6 +3,7 @@ import { v4 as uuIdv4 } from 'uuid'
 import { computed, onMounted, ref } from 'vue'
 import ItemCard from './ItemCard.vue'
 import ItemCart from './ItemCart.vue'
+import { useToast } from '@/composable/useToast'
 const products = ref([])
 const cartLists = ref({})
 
@@ -54,8 +55,12 @@ onMounted(() => {
     },
   ]
 })
-
+const notification = useToast()
 const addToCart = (product) => {
+  if (Object.keys(product).length === 0) {
+    notification.errorState()
+    return
+  }
   const cartId = Object.keys(cartLists.value).filter(
     (item) => cartLists.value[item].id === product.id,
   )
@@ -74,7 +79,7 @@ const addToCart = (product) => {
 const removeCart = (id) => {
   const cartIdIndex = Object.keys(cartLists.value).findIndex((item) => item === id)
   if (cartIdIndex === -1) {
-    alert('資料有誤，請洽詢客服')
+    notification.errorState('deleteCart')
     return
   }
   delete cartLists.value[id]
@@ -82,6 +87,7 @@ const removeCart = (id) => {
 </script>
 <template>
   <div class="flex gap-4">
+    <!-- 商品列表 -->
     <div class="w-2/3">
       <h3 class="text-2xl mb-4">商品列表</h3>
       <div class="flex flex-wrap -mx-3 gap-y-3">
@@ -92,6 +98,7 @@ const removeCart = (id) => {
         </template>
       </div>
     </div>
+    <!-- 購物車 -->
     <div class="w-1/3">
       <h3 class="text-2xl mb-4">購物車</h3>
       <template v-if="Object.keys(cartLists).length === 0">

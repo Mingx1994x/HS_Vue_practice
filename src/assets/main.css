@@ -1,6 +1,7 @@
 /* tailwind */
 @import './base.css';
 @import './style/tailwind.css';
+@import './style/sweet-toast.css';
 
 #app {
   max-width: 1280px;

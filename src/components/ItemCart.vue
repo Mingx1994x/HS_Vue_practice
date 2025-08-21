@@ -1,4 +1,6 @@
 <script setup>
+import { useToast } from '@/composable/useToast'
+
 const props = defineProps({
   cartLists: {
     type: Object,
@@ -9,8 +11,14 @@ const props = defineProps({
 const { cartLists } = props
 
 const emits = defineEmits(['remove-cart'])
-const removeCart = (id) => {
-  emits('remove-cart', id)
+const notification = useToast()
+const removeCart = (product, id) => {
+  notification.confirmModal(product.title).then((result) => {
+    if (result.isConfirmed) {
+      emits('remove-cart', id)
+      notification.successState(product.title, 'deleteCart')
+    }
+  })
 }
 </script>
 <template>
@@ -26,7 +34,7 @@ const removeCart = (id) => {
       </div>
       <div class="flex items-center">
         <span class="me-2">${{ product.price }}</span>
-        <button type="button" class="btn-sm btn-danger rounded" @click="removeCart(key)">
+        <button type="button" class="btn-sm btn-danger rounded" @click="removeCart(product, key)">
           移除
         </button>
       </div>
