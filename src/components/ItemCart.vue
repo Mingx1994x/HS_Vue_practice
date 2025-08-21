@@ -1,22 +1,24 @@
 <script setup>
+import { storeToRefs } from 'pinia'
+import { useCartStore } from '@/stores/cart'
 import { useToast } from '@/composable/useToast'
 
-const props = defineProps({
-  cartLists: {
-    type: Object,
-    required: true,
-  },
-})
-
-const { cartLists } = props
-
-const emits = defineEmits(['remove-cart'])
 const notification = useToast()
-const removeCart = (product, id) => {
-  notification.confirmModal(product.title).then((result) => {
+
+const cart = useCartStore()
+const { cartItems } = storeToRefs(cart)
+const { isRemoveIdExist, removeCartById } = cart
+
+const removeCart = (id, title) => {
+  notification.confirmModal(title).then((result) => {
     if (result.isConfirmed) {
-      emits('remove-cart', id)
-      notification.successState(product.title, 'deleteCart')
+      if (!isRemoveIdExist(id)) {
+        notification.errorState('deleteCart')
+        return
+      }
+      // 刪除購物車
+      removeCartById(id)
+      notification.successState(title, 'deleteCart')
     }
   })
 }
@@ -24,7 +26,7 @@ const removeCart = (product, id) => {
 <template>
   <ul class="mb-3">
     <li
-      v-for="(product, key) in cartLists"
+      v-for="(product, key) in cartItems"
       :key="key"
       class="text-slate-900 bg-gray-200 rounded-2 px-4 py-2 flex justify-between"
     >
@@ -34,7 +36,11 @@ const removeCart = (product, id) => {
       </div>
       <div class="flex items-center">
         <span class="me-2">${{ product.price }}</span>
-        <button type="button" class="btn-sm btn-danger rounded" @click="removeCart(product, key)">
+        <button
+          type="button"
+          class="btn-sm btn-danger rounded"
+          @click="removeCart(key, product.title)"
+        >
           移除
         </button>
       </div>

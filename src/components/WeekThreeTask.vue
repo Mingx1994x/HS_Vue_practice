@@ -1,15 +1,12 @@
 <script setup>
 import { v4 as uuIdv4 } from 'uuid'
-import { computed, onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useCartStore } from '@/stores/cart'
 import ItemCard from './ItemCard.vue'
 import ItemCart from './ItemCart.vue'
 import { useToast } from '@/composable/useToast'
 const products = ref([])
-const cartLists = ref({})
-
-const totalPrice = computed(() =>
-  Object.values(cartLists.value).reduce((acc, item) => acc + item.price * item.qty, 0),
-)
 
 onMounted(() => {
   products.value = [
@@ -56,33 +53,26 @@ onMounted(() => {
   ]
 })
 const notification = useToast()
+const cart = useCartStore()
+const { cartItems, isCartEmpty, totalPrice } = storeToRefs(cart)
+const { findCartId } = cart
+
 const addToCart = (product) => {
   if (Object.keys(product).length === 0) {
     notification.errorState()
     return
   }
-  const cartId = Object.keys(cartLists.value).filter(
-    (item) => cartLists.value[item].id === product.id,
-  )
+  const cartId = findCartId(product.id)
 
-  if (cartId.length === 0) {
+  if (cartId === 'newItem') {
     const newCartId = uuIdv4()
-    cartLists.value[newCartId] = {
+    cartItems.value[newCartId] = {
       ...product,
       qty: 1,
     }
   } else {
-    cartLists.value[cartId[0]].qty++
+    cartItems.value[cartId].qty++
   }
-}
-
-const removeCart = (id) => {
-  const cartIdIndex = Object.keys(cartLists.value).findIndex((item) => item === id)
-  if (cartIdIndex === -1) {
-    notification.errorState('deleteCart')
-    return
-  }
-  delete cartLists.value[id]
 }
 </script>
 <template>
@@ -101,11 +91,11 @@ const removeCart = (id) => {
     <!-- 購物車 -->
     <div class="w-1/3">
       <h3 class="text-2xl mb-4">購物車</h3>
-      <template v-if="Object.keys(cartLists).length === 0">
+      <template v-if="isCartEmpty">
         <p class="mb-3">沒有選購的商品喔</p>
       </template>
       <template v-else>
-        <ItemCart :cartLists="cartLists" @remove-cart="removeCart" />
+        <ItemCart />
       </template>
       <h3 class="text-xl font-semibold text-end">總金額：{{ totalPrice }}</h3>
     </div>
