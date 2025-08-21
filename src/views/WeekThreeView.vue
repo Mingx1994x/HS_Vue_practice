@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { RouterView } from 'vue-router'
 import NavLinks from '@/components/NavLinks.vue'
+import { useToastProvide } from '@/composable/useToastProvide'
 
 const links = ref([
   {
@@ -13,6 +14,7 @@ const links = ref([
     route: '/week3/week3-task',
   },
 ])
+useToastProvide()
 </script>
 <template>
   <div class="w-3/4 mx-auto">

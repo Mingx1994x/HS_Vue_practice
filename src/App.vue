@@ -4,7 +4,6 @@ import { RouterView } from 'vue-router'
 
 import HelloWorld from './components/HelloWorld.vue'
 import NavLinks from './components/NavLinks.vue'
-import { useToastProvide } from './composable/useToastProvide'
 
 // 路由
 const links = ref([
@@ -25,8 +24,6 @@ const links = ref([
     route: '/week3',
   },
 ])
-
-useToastProvide()
 </script>
 
 <template>
