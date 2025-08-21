@@ -11,7 +11,7 @@ export const useCartStore = defineStore('Cart Store', () => {
   )
   // methods
   const findCartId = (id) => {
-    const cartId = Object.keys(cartItems.value).filter(item => (cartItems.value[item].id === id))
+    const cartId = Object.keys(cartItems.value).filter(item => (cartItems.value[item].productId === id))
 
     if (cartId.length === 0) {
       return "newItem"

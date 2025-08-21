@@ -7,14 +7,13 @@ const props = defineProps({
     required: true,
   },
 })
-const { product } = props
-const { title, description, price, imgUrl } = product
+const { productId, title, description, price, imgUrl } = props.product
 
 const emits = defineEmits(['add-to-cart'])
 const notification = useToast()
 const addToCart = () => {
-  emits('add-to-cart', product)
-  notification.successState(product.title)
+  emits('add-to-cart', { productId, title, price })
+  notification.successState(title)
 }
 </script>
 <template>
@@ -24,7 +23,9 @@ const addToCart = () => {
       <h5 class="text-xl font-bold">{{ title }}</h5>
       <p class="card-text">{{ description }}</p>
       <p class="fw-bold text-primary">$ {{ price }}</p>
-      <button class="btn-md btn-primary" @click="addToCart">加入購物車</button>
+      <button class="btn-md btn-primary" @click="addToCart(productId, title, price)">
+        加入購物車
+      </button>
     </div>
   </div>
 </template>
